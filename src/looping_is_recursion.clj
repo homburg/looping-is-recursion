@@ -23,13 +23,32 @@
        (recur (rest seq1) (rest seq2)))))
 
 (defn find-first-index [pred a-seq]
-  ":(")
+  (loop [acc a-seq
+         index 0]
+    (cond
+      (empty? acc) nil
+      (pred (first acc)) index
+      :else (recur (rest acc) (inc index)))))
+
 
 (defn avg [a-seq]
-  -1)
+  (loop [acc a-seq
+         len 0
+         sum 0]
+    (if (empty? acc) (if (zero? len) 0
+                       (/ sum len))
+      (let [head (first acc)]
+        (recur (rest acc) (+ 1 len) (+ head sum))))))
 
 (defn parity [a-seq]
-  ":(")
+  (loop [eat a-seq
+         acc #{}]
+    (if (empty? eat) acc
+      (recur
+        (rest eat)
+        (let [head (first eat)]
+          (if (contains? acc head) (disj acc head)
+            (conj acc head)))))))
 
 (defn fast-fibo [n]
   ":(")
