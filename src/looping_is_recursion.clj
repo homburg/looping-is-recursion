@@ -51,8 +51,22 @@
             (conj acc head)))))))
 
 (defn fast-fibo [n]
-  ":(")
+  (cond
+    (zero? n) 0
+    (= n 1) 1
+    :else (loop [c n
+                 n1 0
+                 n2 1]
+            (if (= 1 c) n2
+              (recur (- c 1) n2 (+ n1 n2))))))
 
 (defn cut-at-repetition [a-seq]
-  [":("])
+  (loop [tail a-seq
+         head []
+         so-far #{}]
+    (if (empty? tail) head
+      (let [f (first tail)]
+        (if (contains? so-far f) head
+          (recur (rest tail) (conj head f) (conj so-far f)))))))
+
 
